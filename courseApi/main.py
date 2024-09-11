@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from courseApi.models.base import database
+from courseApi.models import database
 
 
 @asynccontextmanager

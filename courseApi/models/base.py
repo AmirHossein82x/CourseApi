@@ -1,12 +1,23 @@
-import databases
-import sqlalchemy
-from courseApi.config import config
-
-meta_data = sqlalchemy.MetaData()
-engine = sqlalchemy.create_engine(config.DATABASE_URL)
+# import databases
+# import sqlalchemy
+# from courseApi.config import config
+from sqlalchemy.orm import DeclarativeBase
 
 
-meta_data.create_all(engine)
-database = databases.Database(
-    config.DATABASE_URL, force_rollback=config.DB_FORCE_ROL_BACK
-)
+
+class Base(DeclarativeBase):
+    pass
+
+
+
+
+
+
+
+# engine = sqlalchemy.create_engine(config.DATABASE_URL)
+
+
+# Base.metadata.create_all(engine)
+# database = databases.Database(
+#     config.DATABASE_URL, force_rollback=config.DB_FORCE_ROL_BACK
+# )
