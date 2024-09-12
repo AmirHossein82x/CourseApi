@@ -3,6 +3,7 @@ import sqlalchemy
 from courseApi.config import config
 from courseApi.models.base import Base
 from .user import User  # noqa: F401
+from .course import Course, Promotion  # noqa: F401
 
 
 engine = sqlalchemy.create_engine(config.DATABASE_URL)
