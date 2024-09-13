@@ -3,7 +3,7 @@ from courseApi.models.user import User
 from courseApi.schemas.user import UserInDB
 from courseApi.utils.hash import get_password_hash
 from fastapi import HTTPException, status
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 
 
 async def get_user_by_email(email: str):
@@ -26,3 +26,18 @@ async def create_user(data: UserInDB):
     except Exception:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "email already exists!")
     return user
+
+
+async def update_user(item: User, pk: int):
+    query = update(User).where(User.id == pk).values(**item.model_dump())
+    data = await database.execute(query)
+    return data
+
+
+async def password_reset(password, pk: int):
+    query = (
+        update(User)
+        .where(User.id == pk)
+        .values({"password": get_password_hash(password)})
+    )
+    await database.execute(query)

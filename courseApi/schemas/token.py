@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class Token(BaseModel):
@@ -11,5 +11,5 @@ class TokenData(BaseModel):
 
 
 class LoginToken(BaseModel):
-    email: str
+    email: EmailStr
     password: str

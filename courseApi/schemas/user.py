@@ -22,3 +22,9 @@ class UserMe(BaseModel):
     email: EmailStr
     full_name: str | None = None
 
+
+
+class UserChangePassword(BaseModel):
+    password: str
+    new_password: str
+    new_password_retype: str
