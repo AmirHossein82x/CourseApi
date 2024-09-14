@@ -7,6 +7,7 @@ from typing import Annotated
 from courseApi.schemas.token import TokenData
 from fastapi import Depends, HTTPException, status
 from jwt.exceptions import InvalidTokenError
+from courseApi.schemas.user import UserMe
 
 
 async def authenticate_user(email: str, password: str):
@@ -47,3 +48,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     if user is None:
         raise credentials_exception
     return user
+
+
+
+async def isAdminUser(user: Annotated[UserMe, Depends(get_current_user)]):
+    if user.is_admin:
+        return user
+    raise HTTPException(status.HTTP_405_METHOD_NOT_ALLOWED, "you are not allow to do this action")

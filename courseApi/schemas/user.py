@@ -21,6 +21,7 @@ class UserMe(BaseModel):
     id:int
     email: EmailStr
     full_name: str | None = None
+    is_admin:bool
 
 
 

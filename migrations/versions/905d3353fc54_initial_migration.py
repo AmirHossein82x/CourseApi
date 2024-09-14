@@ -1,8 +1,8 @@
-"""create course and promotion table
+"""Initial migration
 
-Revision ID: 56f802d465e2
-Revises: 1167fcc18cdf
-Create Date: 2024-09-12 18:42:16.370926
+Revision ID: 905d3353fc54
+Revises: 
+Create Date: 2024-09-14 23:05:00.230134
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '56f802d465e2'
-down_revision: Union[str, None] = '1167fcc18cdf'
+revision: str = '905d3353fc54'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

@@ -19,12 +19,13 @@ async def create_user(data: UserInDB):
             "email": data.email,
             "full_name": data.full_name,
             "password": get_password_hash(data.password),
+        
         }
     )
     try:
         user = await database.execute(query)
-    except Exception:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, "email already exists!")
+    except Exception as e:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, str(e))
     return user
 
 
