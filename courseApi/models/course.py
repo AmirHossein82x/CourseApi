@@ -19,7 +19,8 @@ class Promotion(Base):
 class Course(Base):
     __tablename__ = "course"
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String(15))
+    title: Mapped[str] = mapped_column(String(15), unique=True)
+    slug: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String(100))
     price: Mapped[int] = mapped_column(Integer)
     promotion_id: Mapped[int] = mapped_column(ForeignKey("promotion.id"))

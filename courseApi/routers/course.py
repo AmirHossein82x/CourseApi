@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
-from courseApi.schemas.course import CourseCreate
+from courseApi.schemas.course import CourseCreate, CourseShowToAll
 from courseApi.schemas.user import UserMe
-from courseApi.crud.course import course_create
+from courseApi.crud.course import course_create, get_all_course, get_course_by_slug
 from fastapi import HTTPException, status
-from asyncpg.exceptions import ForeignKeyViolationError
+from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from courseApi.utils.security import isAdminUser
-from typing import Annotated
+from typing import Annotated, List
 
 router = APIRouter(prefix="/course", tags=["course"])
 
@@ -18,5 +18,22 @@ async def create_course(
         course_id = await course_create(item)
     except ForeignKeyViolationError:
         raise HTTPException(status.HTTP_400_BAD_REQUEST, "no promotion with that id")
+    except UniqueViolationError:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, "title already exists")
+
     else:
         return {"id": course_id, **item.model_dump()}
+
+
+@router.get("/", response_model=List[CourseShowToAll])
+async def show_all_courses():
+    return await get_all_course()
+
+
+@router.get("/{slug}")
+async def show_course_by_slug(slug: str):
+
+    course = await get_course_by_slug(slug)
+    if course:
+        return CourseShowToAll(**course)
+    raise HTTPException(404, "not found")
