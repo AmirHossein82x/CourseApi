@@ -10,7 +10,7 @@ from typing import Annotated
 router = APIRouter(prefix="/course", tags=["course"])
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_course(
     item: CourseCreate, user: Annotated[UserMe, Depends(isAdminUser)]
 ):

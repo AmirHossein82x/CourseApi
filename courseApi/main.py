@@ -3,6 +3,7 @@ from courseApi.models import database
 from fastapi import FastAPI
 from courseApi.routers.user import router as userRouter
 from courseApi.routers.course import router as courseRouter
+from fastapi import HTTPException
 
 
 @asynccontextmanager
