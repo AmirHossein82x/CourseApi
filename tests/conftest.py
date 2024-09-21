@@ -11,6 +11,16 @@ from courseApi.main import app
 from courseApi.models.user import User
 from sqlalchemy import select, insert, update
 from courseApi.models.course import Promotion
+from alembic.config import Config
+from alembic import command
+
+
+@pytest.fixture(scope="session", autouse=True)
+def alembic_config():
+    config = Config("alembic.ini")
+    command.upgrade(config, "head")
+    yield
+    command.downgrade(config, "base")
 
 
 @pytest.fixture(scope="session")
@@ -87,3 +97,24 @@ async def created_promotion():
     data = insert(Promotion).values({"discount": 0.5})
     res = await database.execute(data)
     return res
+
+
+@pytest.fixture()
+async def created_course(
+    async_client: AsyncClient, logged_in_token_for_admin, created_promotion
+):
+    data = {
+        "title": "test",
+        "description": "test test test",
+        "price": 12000,
+        "promotion_id": created_promotion,
+        "duration": 20,
+    }
+    res = await async_client.post(
+        "course/",
+        json=data,
+        headers={"Authorization": f"Bearer {logged_in_token_for_admin}"},
+    )
+    data["slug"] = "test"
+
+    return data
