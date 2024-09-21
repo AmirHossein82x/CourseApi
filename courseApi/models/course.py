@@ -1,7 +1,9 @@
 from .base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, ForeignKey, Integer, Date, func, DECIMAL
-from typing import List
+from typing import  List
+
+
 
 
 class Promotion(Base):
@@ -29,3 +31,4 @@ class Course(Base):
     time_published: Mapped[Date] = mapped_column(
         Date, default=func.current_date(), nullable=False
     )
+    

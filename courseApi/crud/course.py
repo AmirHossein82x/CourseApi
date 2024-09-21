@@ -1,4 +1,4 @@
-from sqlalchemy import insert, select, label
+from sqlalchemy import insert, select, label, update, delete
 from courseApi.models.course import Course, Promotion
 from courseApi.models import database
 from slugify import slugify
@@ -27,3 +27,15 @@ async def get_course_by_slug(slug):
         Promotion, Course.promotion_id == Promotion.id
     )
     return await database.fetch_one(query)
+
+
+
+async def update_course_crud(slug, data):
+    query = update(Course).where(Course.slug == slug).values({**data, "slug": slugify(data.get("title"))})
+    await database.execute(query)
+
+
+
+async def delete_course_by_slug(slug):
+    query = delete(Course).where(Course.slug == slug)
+    await database.execute(query)
