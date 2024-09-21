@@ -10,6 +10,10 @@ from courseApi.crud.buy_course import (
     get_all_courses_for,
 )
 from typing import List
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 router = APIRouter(prefix="/course-buy", tags=["course-buy"])
@@ -19,6 +23,7 @@ router = APIRouter(prefix="/course-buy", tags=["course-buy"])
 async def register_order(
     user: Annotated[UserMe, Depends(get_current_user)], item: CourseBoughtCreate
 ):
+    logger.info(f"try to register order with user: {user.email} and course_id: {item.course_id}")
     await register_order_crud(user.id, item.model_dump())
     return {"detail": "order created"}
 
@@ -27,6 +32,7 @@ async def register_order(
 async def get_all_bought_course_for_user(
     user: Annotated[UserMe, Depends(get_current_user)]
 ):
+    logger.info(f"get all courses for user id: {user.id}", extra={"email": user.email})
     course_ids = await get_course_ids(user)
     data = await get_all_courses_for(course_ids)
     return data
