@@ -45,7 +45,7 @@ async def test_update_course(
 ):
     data = {"title": "ali reza", "duration": 20}
     res = await async_client.patch(
-        f'course/{created_course["slug"]}',
+        f'course/{created_course.json()["slug"]}',
         json=data,
         headers={"Authorization": f"Bearer {logged_in_token_for_admin}"},
     )
@@ -57,7 +57,7 @@ async def test_delete_course(
     async_client: AsyncClient, logged_in_token_for_admin, created_course
 ):
     res = await async_client.delete(
-        f'course/{created_course["slug"]}',
+        f'course/{created_course.json()["slug"]}',
         headers={"Authorization": f"Bearer {logged_in_token_for_admin}"},
     )
     assert res.json()["detail"] == "no content"

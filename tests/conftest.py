@@ -100,9 +100,7 @@ async def created_promotion():
 
 
 @pytest.fixture()
-async def created_course(
-    async_client: AsyncClient, logged_in_token_for_admin, created_promotion
-):
+async def created_course(async_client: AsyncClient, logged_in_token_for_admin, created_promotion):
     data = {
         "title": "test",
         "description": "test test test",
@@ -110,11 +108,11 @@ async def created_course(
         "promotion_id": created_promotion,
         "duration": 20,
     }
-    res = await async_client.post(
+    await async_client.post(
         "course/",
         json=data,
         headers={"Authorization": f"Bearer {logged_in_token_for_admin}"},
     )
     data["slug"] = "test"
-
-    return data
+    course = await async_client.get(f"course/{'test'}")
+    return course
