@@ -18,7 +18,3 @@ app.include_router(userRouter)
 app.include_router(courseRouter)
 app.include_router(buyCourseRouter)
 
-
-@app.get("/")
-async def show():
-    return {"ping": "pong"}

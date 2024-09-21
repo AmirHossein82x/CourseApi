@@ -15,7 +15,7 @@ from typing import List
 router = APIRouter(prefix="/course-buy", tags=["course-buy"])
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def register_order(
     user: Annotated[UserMe, Depends(get_current_user)], item: CourseBoughtCreate
 ):
