@@ -32,3 +32,14 @@ class Course(Base):
         Date, default=func.current_date(), nullable=False
     )
     
+
+
+class CourseBought(Base):
+    __tablename__ = "course_bought"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    course_id: Mapped[int] = mapped_column(ForeignKey("course.id"))
+    payed: Mapped[int] = mapped_column(Integer)
+    time_bought: Mapped[Date] = mapped_column(
+        Date, default=func.current_date(), nullable=False
+    )

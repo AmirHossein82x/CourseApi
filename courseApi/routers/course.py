@@ -62,3 +62,6 @@ async def update_course(slug: str, item: CourseUpdate, user: Annotated[UserMe, D
 async def delete_course(slug: str, user: Annotated[UserMe, Depends(isAdminUser)]):
     await delete_course_by_slug(slug)
     return {"detail": "no content"}
+
+
+
